@@ -10,7 +10,7 @@ btn1.addEventListener("click", function(){
     var username = document.querySelector("#input-username").value;
     var email = document.querySelector("#input-email").value;
     var address = document.querySelector("#input-address").value;
-    var adminStatus = document.querySelector("#input-admin").value;
+    var adminStatus = document.querySelector("#input-admin");
     var image = document.querySelector("#output").src;
     var table = document.querySelector("#data-table");
     
@@ -20,9 +20,16 @@ btn1.addEventListener("click", function(){
         if (username == rows[i].cells[0].innerHTML) {
           rows[i].cells[1].innerHTML = email;
           rows[i].cells[2].innerHTML = address;
-          rows[i].cells[3].innerHTML = adminStatus;
+          
+          if(adminStatus.checked){
+            rows[i].cells[3].innerHTML = "X";
+          }
+          else{
+            rows[i].cells[3].innerHTML = "-";
+          }
+          
           rows[i].cells[4].firstChild.src = image;
-         return;
+          return;
          }
      }
 
@@ -43,7 +50,14 @@ btn1.addEventListener("click", function(){
      cell1.innerHTML = username;
      cell2.innerHTML = email;
      cell3.innerHTML = address;
-     cell4.innerHTML = adminStatus;
+     
+     if(adminStatus.checked){
+        cell4.innerHTML = "X";
+      }
+      else{
+        cell4.innerHTML = "-";
+      }
+      
      cell5.appendChild(imgnode);
       
 });
