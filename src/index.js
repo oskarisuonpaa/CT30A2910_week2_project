@@ -70,12 +70,6 @@ btn2.addEventListener("click", function() {
         }
 });
 
-// based on: https://www.youtube.com/watch?v=lzK8vM_wdoY 
 image_input.addEventListener("change", function() {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => {
-    const uploaded_image = reader.result;
-    preview.setAttribute('src', uploaded_image);
-  });
-  reader.readAsDataURL(this.files[0]);
+  preview.src = URL.createObjectURL(image_input.files[0]);
 });

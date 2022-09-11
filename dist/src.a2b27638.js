@@ -175,15 +175,9 @@ btn2.addEventListener("click", function () {
   while (table.rows.length != 1) {
     table.deleteRow(-1);
   }
-}); // based on: https://www.youtube.com/watch?v=lzK8vM_wdoY 
-
+});
 image_input.addEventListener("change", function () {
-  var reader = new FileReader();
-  reader.addEventListener("load", function () {
-    var uploaded_image = reader.result;
-    preview.setAttribute('src', uploaded_image);
-  });
-  reader.readAsDataURL(this.files[0]);
+  preview.src = URL.createObjectURL(image_input.files[0]);
 });
 },{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -213,7 +207,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "34405" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "35733" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
