@@ -117,75 +117,74 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"src/index.js":[function(require,module,exports) {
-var btn1 = document.querySelector("#submit-data");
-var btn2 = document.querySelector("#empty-table");
-var image_input = document.querySelector("#input-image");
-var preview = document.querySelector("#output");
-btn1.addEventListener("click", function () {
-  var username = document.querySelector("#input-username").value;
-  var email = document.querySelector("#input-email").value;
-  var address = document.querySelector("#input-address").value;
-  var adminStatus = document.querySelector("#input-admin");
-  var image = document.querySelector("#output").src;
-  var table = document.querySelector("#data-table");
-  var rows = table.rows;
+})({"node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
 
-  for (var i = 0; i < rows.length; i++) {
-    if (username == rows[i].cells[0].innerHTML) {
-      rows[i].cells[1].innerHTML = email;
-      rows[i].cells[2].innerHTML = address;
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
 
-      if (adminStatus.checked) {
-        rows[i].cells[3].innerHTML = "X";
-      } else {
-        rows[i].cells[3].innerHTML = "-";
-      }
+  return bundleURL;
+}
 
-      rows[i].cells[4].firstChild.src = image;
-      return;
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
     }
   }
 
-  var row = table.insertRow();
-  var cell1 = row.insertCell(0);
-  var cell2 = row.insertCell(1);
-  var cell3 = row.insertCell(2);
-  var cell4 = row.insertCell(3);
-  var cell5 = row.insertCell(4);
-  var imgnode = document.createElement("img");
-  imgnode.src = image;
-  imgnode.style.height = "64px";
-  imgnode.style.width = "64px";
-  cell1.innerHTML = username;
-  cell2.innerHTML = email;
-  cell3.innerHTML = address;
+  return '/';
+}
 
-  if (adminStatus.checked) {
-    cell4.innerHTML = "X";
-  } else {
-    cell4.innerHTML = "-";
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
   }
 
-  cell5.appendChild(imgnode);
-});
-btn2.addEventListener("click", function () {
-  var table = document.querySelector("#data-table");
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
 
-  while (table.rows.length != 1) {
-    table.deleteRow(-1);
-  }
-}); // based on: https://www.youtube.com/watch?v=lzK8vM_wdoY 
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
 
-image_input.addEventListener("change", function () {
-  var reader = new FileReader();
-  reader.addEventListener("load", function () {
-    var uploaded_image = reader.result;
-    preview.setAttribute('src', uploaded_image);
-  });
-  reader.readAsDataURL(this.files[0]);
-});
-},{}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -389,5 +388,5 @@ function hmrAcceptRun(bundle, id) {
     return true;
   }
 }
-},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/index.js"], null)
-//# sourceMappingURL=/src.a2b27638.js.map
+},{}]},{},["node_modules/parcel-bundler/src/builtins/hmr-runtime.js"], null)
+//# sourceMappingURL=/index.js.map
